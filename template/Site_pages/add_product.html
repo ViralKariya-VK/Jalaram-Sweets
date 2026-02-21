@@ -1,0 +1,48 @@
+{% extends 'sub_base.html' %}
+
+{% load static %}
+
+{% block sub_content %}
+
+    <section class="class spad" style="height:150%;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="class__form">
+                        <div class="section-title">
+                            <a href="#">
+                                <h2>Add Product</h2>
+                            </a>
+                        </div>
+                        <form action="add_product" enctype="multipart/form-data" method="post">
+                            {% csrf_token %}
+                            
+                            <input type="text" name="name" placeholder="Enter Product Name" required>
+                            <input type="text" name="price" placeholder="Enter Product Price" required>
+                            <input type="file" name="picture" required>
+                            <input type="text" name="short_desc" placeholder="Enter Short Description of the Product" required> 
+                            <textarea name="detailed_desc" placeholder="Enter Detailed Description of the Product" cols="59" rows="5" required></textarea>
+                            <select name="category">
+                                <option selected disabled>Select Product Category</option>
+                                <option value="Traditional Classics">Traditional Classics</option>
+                                <option value="Barfis">Barfis</option>
+                                <option value="Chocolate Specialties">Chocolate Specialties</option>
+                                <option value="Kheer and Kheer Kadam">Kheer and Kheer Kadam</option>
+                                <option value="Namkeen and Snacks">Namkeen and Snacks</option>
+                                <option value="Chikkis">Chikkis</option>
+                            </select>
+                            <select required name="is_exclusive">
+                                <option selected disabled >Is Exclusive?</option>
+                                <option value="on">Yes</option>
+                                <option value="off">No</option>
+                            </select>
+                            <input type="text" name="ingredients" placeholder="Enter Ingredients using comma(,)" required>
+                            <button type="submit" class="site-btn">Add Product</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

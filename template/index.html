@@ -1,0 +1,198 @@
+{% extends 'sub_base.html' %}
+
+{% load static %}
+
+{% block sub_content %}
+
+<!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="hero__slider owl-carousel">
+            <div class="hero__item set-bg" data-setbg="{% static 'images/pages/Home_page/Background/background.jpg' %}">
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="hero__text">
+                                <h2>Where Every Sweet Tells a Story!</h2>
+                                <!-- Change the line for sweets -->
+                                <a href="products" class="primary-btn">Every Bite, a New Story</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+
+    <!-- Categories Section Begin -->
+    <div class="categories">
+        <div class="container">
+            <div class="row">
+                <div class="categories__slider owl-carousel">
+                    <div class="categories__item">
+                        <a href="{% url 'products' %}?category=Traditional Classics" class="categories__item__icon">
+                            <img src="{% static 'images/icons/Categories_icons/1_Traditional_Classics.gif' %}" alt="">
+                            <h5>Traditional Classics</h5>
+                        </a>
+                    </div>
+                    <div class="categories__item">
+                        <a href="{% url 'products' %}?category=Barfis" class="categories__item__icon">
+                            <img src="{% static 'images/icons/Categories_icons/2_Barfi_Varieties.gif' %}" alt="">
+                            <h5>Barfi</h5>
+                        </a>
+                    </div>
+                    <div class="categories__item">
+                        <a href="{% url 'products' %}?category=Chocolate Specialties" class="categories__item__icon">
+                             <img src="{% static 'images/icons/Categories_icons/3_Chocolate_Specialities.gif' %}" alt="">
+                            <h5>Chocolate Specialties</h5>
+                        </a>
+                    </div>
+                    <div class="categories__item">
+                        <a href="{% url 'products' %}?category=Kheer and Kheer Kadam" class="categories__item__icon">
+                            <img src="{% static 'images/icons/Categories_icons/4_Kheer&KheerKadam.gif' %}" alt="">
+                            <h5>Kheer & Kheer Kadam</h5>
+                        </a>
+                    </div>
+                    <div class="categories__item">
+                        <a href="{% url 'products' %}?category=Namkeen and Snacks" class="categories__item__icon">
+                            <img src="{% static 'images/icons/Categories_icons/5_Namkeen&Snacks.gif' %}" alt="">
+                            <h5>Namkeen & Snacks</h5>
+                        </a>
+                    </div>
+                    <div class="categories__item">
+                        <a href="{% url 'products' %}?category=Chikkis" class="categories__item__icon">
+                            <img src="{% static 'images/icons/Categories_icons/6_Chikkis.gif' %}" alt="">
+                            <h5>Chikki</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-title">
+                        <h2>Our Exclusive Products</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" data-setbg="{{product.picture.url}}">
+                                <div class="product__label">
+                                    <span>{{product.category}}</span>
+                                </div>
+                            </div>
+                            <div class="product__item__text">
+                                <h6><a href="/product_details/{{product.id}}">{{product.name}}</a></h6>
+                                <div class="product__item__price">{{product.price}}/kg</div>
+                                <div class="cart_add">
+                                    <a href="products">See More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+
+    <!-- Review Section Begin -->
+    <section class="class spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="class__form">
+                        <div class="section-title">
+                            <a href="#">
+                                <span>Share Your Feedback</span>
+                                <h2>We Value Your Opinion, <br />Help us Improve!</h2>
+                            </a>
+                        </div>
+                        <form action="submit_review" method="POST">
+
+                            {% csrf_token %}
+
+                            <div class="rating" style="float: left;"> 
+                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5"></label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4"></label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3"></label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2"></label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1"></label>
+                            </div>
+                            <input type="text" name="review" placeholder="Give us your review">
+                            <button type="submit" class="site-btn">Submit!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="class__video set-bg" data-setbg="{% static 'images/pages/Home_page/side_picture.jpg' %}">
+            </div>
+        </div>
+    </section>
+    <!-- Class Section End -->
+
+
+    <!-- Testimonial Section Begin -->
+    <section class="team spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-title">
+                        <span>Testimonial</span>
+                        <h2>Our client say</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="testimonial__slider owl-carousel">
+                    {% for review in reviews %}
+                    <div class="col-lg-6">
+                    <div class="testimonial__item">
+                        <div class="testimonial__author">
+                            <div class="testimonial__author__text">
+                                <h5>{{ review.user.username }}</h5>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            {% for i in "12345" %}
+                                {% if i|add:"0" <= review.rating %}
+                                    <span class="icon_star"></span>
+                                {% else %}
+                                    <span class="icon_star_alt"></span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p>{{ review.review_text }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Testimonial Section End -->
+
+
+
+    <!-- Map Begin -->
+    <div class="map">
+        <div class="map__iframe">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d385.12738628600624!2d70.24506515335128!3d21.300634732379404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bfd51b2aae079cf%3A0xfac326eca6b1810a!2sJalaram%20Dairy%20Farm!5e0!3m2!1sen!2sin!4v1680630370551!5m2!1sen!2sin"
+                height="300" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </div>
+    <!-- Map End -->
+
+{% endblock %}

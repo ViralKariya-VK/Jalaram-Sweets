@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content  %}
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__cart">
+            <div class="offcanvas__cart__links">
+                {% if request.user.is_anonymous %}
+                    <a href="{% url 'login' %}"><img src="{% static 'images/icons/cart_icon2.png' %}" height="27px" alt=""></a>
+                    <a href="{% url 'login' %}"><img src="{% static 'images/icons/user_icon.png' %}" height="27px" alt=""></a>
+                {% else %}
+                    
+                    {% if user.is_authenticated and user.is_superuser %}
+                        <a href="{% url 'add_product' %}"><img src="{% static 'images/icons/add_icon.png' %}" height="27px" alt=""></a>
+                        <a href="#"><img src="{% static 'images/icons/user_icon.png' %}" height="27px" alt=""></a>
+                    {% else %}
+                        <a href="{% url 'view_cart' %}"><img src="{% static 'images/icons/cart_icon2.png' %}" height="27px" alt=""></a>
+                        <a href="#"><img src="{% static 'images/icons/user_icon.png' %}" height="27px" alt=""></a>
+                    {% endif %}
+
+                {% endif %}
+            </div>
+            <div class="offcanvas__cart__item">
+                <div class="cart__price">
+                    {% if request.user.is_anonymous %}
+                        <span>Welcome, </span>User
+                    {% else %}
+                        <span>Welcome, </span>{{ user }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas__logo">
+            <a href="/"><img src="{% static 'images/logos/logo_full.png' %}" height="100px" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="header__top__inner">
+                            <div class="header__logo">
+                                <a href="/"><img src="{% static 'images/logos/logo_short.png' %}" height="110px" alt=""></a>
+                            </div>
+                            <div class="header__top__right">
+                                <div class="header__top__right__cart">
+                                    {% if request.user.is_anonymous %}
+                                        <a href="{% url 'login' %}"><img src="{% static 'images/icons/cart_icon2.png' %}" height="27px" alt=""></a>
+                                        <a href="{% url 'login' %}"><img src="{% static 'images/icons/user_icon.png' %}" height="27px" alt=""></a>
+                                    {% else %}
+              
+                                        {% if user.is_authenticated and user.is_superuser %}
+                                            <a href="{% url 'add_product' %}"><img src="{% static 'images/icons/add_icon.png' %}" height="27px" alt=""></a>
+                                            <a href="#"><img src="{% static 'images/icons/user_icon.png' %}" height="27px" alt=""></a>
+                                        {% else %}
+                                            <a href="{% url 'view_cart' %}"><img src="{% static 'images/icons/cart_icon2.png' %}" height="27px" alt=""></a>
+                                            <a href="#"><img src="{% static 'images/icons/user_icon.png' %}" height="27px" alt=""></a>
+                                        {% endif %}
+
+                                    {% endif %}
+
+                                    <div class="cart__price"> 
+                                        {% if request.user.is_anonymous %}
+                                        <span>Welcome, </span>User
+                                        {% else %}
+                                        <span>Welcome, </span>{{ user }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas__open"><i class="fa fa-bars"></i></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="{% url 'products' %}">Sweets Library</a></li>
+                            <li><a href="{% url 'about' %}">About Us</a></li>
+                            <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                            
+                            {% if request.user.is_anonymous %}
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                            {% else %}
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+
+    {% block sub_content %}
+
+
+
+    {% endblock %}
+
+
+    <!-- Footer Section Begin -->
+    <footer class="footer set-bg" data-setbg="{% static 'images/pages/Home_page/Background/footer.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>WORKING HOURS</h6>
+                        <ul>
+                            <li>Monday-Friday: 11:00 am – 7:00 pm</li>
+                            <li>Saturday: 11:00 am – 8:30 pm</li>
+                            <li>Sunday: 11:00 am – 8:30 pm</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="/"><img src="{% static 'images/logos/logo_full_crop.png' %}" height="150px"
+                                    alt="Logo of Jalaram Sweets"></a>
+                        </div>
+                        <div class="footer__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer__newslatter">
+                        <h6>Quick Link</h6>
+                        <p style="margin-bottom: 7px;"><a href="/" style="color: #221717;">Home</a></p>
+                        <p style="margin-bottom: 7px;"><a href="{% url 'products' %}" style="color: #221717;">Sweets Library</a></p>
+                        <p style="margin-bottom: 7px;"><a href="{% url 'about' %}" style="color: #221717;">About Us</a></p>
+                        <p style="margin-bottom: 7px;"><a href="{% url 'contact' %}" style="color: #221717;">Contact Us</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    {% endblock %}

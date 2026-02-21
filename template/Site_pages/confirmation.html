@@ -1,0 +1,63 @@
+{% extends 'sub_base.html' %}
+
+{% load static %}
+
+{% block sub_content %}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__text">
+                    <h2>Order detail</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+    <!-- Shop Details Section Begin -->
+    <section class="product-details spad" style="padding-bottom: 35px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product__details__img">
+                        <div class="product__details__big__img">
+                            <img class="big_img" src="" alt="" style="padding-left: 20px; height:400px;">
+                        </div>
+                        <div class="product__details__thumb">
+                            {% for item in order_items %}
+                            <div class="pt__item active">
+                                    <img data-imgbigurl="{{ item.product.picture.url }}" 
+                                    src="{{ item.product.picture.url }}" alt="" height="90px">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="product__details__text">
+                        <div class="product__label">Order Received!</div>
+                        <!-- <div class="product__label">Order Number: {{ order.id }}</div> -->
+                        <h4 style="text-transform: capitalize;">Name: {{ order.user.username }}</h4>
+                        <h5>Order Total: ₹{{ order.total }}</h5>
+                        <p><b>Address:</b> <br> {{ order.address }}, {{ order.city }}, {{ order.state }} - {{ order.zipcode }}</p>
+                        <ul>
+                            <li><span><b>Order Summary:</b></span></li>
+                            {% for item in order_items %}
+                                <li>{{ item.product.name }} ({{ item.quantity }}) - ₹{{ item.total_price }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="product__details__option">
+                            <a href="{% url 'products' %}" class="primary-btn" aria-disabled="true">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Details Section End -->
+
+{% endblock %}

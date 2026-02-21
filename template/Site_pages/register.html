@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+        <!-- Class Section Begin -->
+        <section class="class spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="class__form">
+                            <div class="section-title">
+                                <a href="#">
+                                    <span></span>
+                                    <h2>Sign Up</h2>
+                                </a>
+                            </div>
+                            <form method="post">
+
+                                {% csrf_token %}
+
+                                <input type="text" name="name" placeholder="Enter Your Username" required>
+                                <input type="email" name="email" placeholder="Enter Your E-Mail" required>
+                                <input type="text" name="number" placeholder="Enter Your Number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                                {% if error_message %}
+                                    <h6 style="margin-top: 20px; color: red; font-weight: bold;">
+                                    {{ error_message }}
+                                    </h6>
+                                {% endif %}
+                                <input type="text" name="password" placeholder="Password" required>
+
+                                {% if error_message %}
+                                    <h6 style="margin-top: 20px; color: red; font-weight: bold;">
+                                    {{ error_message }}
+                                    </h6>
+                                {% endif %}
+
+                                <button type="submit" class="site-btn">Signup</button>
+                            </form>
+    
+                            <h6 style="margin-top: 20px;">
+                                Already a user? 
+                                <a href="login" 
+                                style="color: blue"
+                                onmouseover="this.style.color='black'"
+                                onmouseout="this.style.color='blue'">
+                                    Login
+                                </a>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="class__video set-bg"
+                data-setbg="{% static 'images/products/1_Traditional_Classics/0_MilkCake.webp' %}"
+                style="height: 110%;">
+            </div>
+            </div>
+        </section>
+        <!-- Class Section End -->
+    
+
+{% endblock %}
+
+<style>
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}    
+</style>

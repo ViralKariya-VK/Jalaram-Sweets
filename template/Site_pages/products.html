@@ -1,0 +1,153 @@
+{% extends 'sub_base.html' %}
+
+{% load static %}
+
+{% block sub_content %}
+
+{% if messages %}
+<!-- <script>
+    var a = "{% for message in messages %}{{ message }}{% endfor %}";
+    alert(a);
+</script> -->
+
+<div id="custom-alert" class="custom-alert" style="display: none;">
+    <span style="position: fixed;
+        bottom: 30px; /* Position it 10px from the bottom */
+        left: 50%; /* Center horizontally */
+        transform: translateX(-50%); /* Center the box properly */
+        background-color: #0F52BA; /* Green background */
+        color: white;
+        padding: 13px;
+        border-radius: 5px;
+        z-index: 1000; /* Ensure it's on top of other content */
+        font-size: 17px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: ease-in-out;">{% for message in messages %}{{ message }}{% endfor %}</span>
+</div>
+<script>
+    // Display the alert box
+    document.getElementById('custom-alert').style.display = 'block';
+
+    // Hide the alert box after 1 second (1000 ms)
+    setTimeout(function() {
+        document.getElementById('custom-alert').style.display = 'none';
+    }, 1500);
+</script>
+{% endif %}   
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__text">
+                    <h2>Sweets Library</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__links">
+                    <a href="/">Home</a>
+                    <span>Sweets Library</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+    <div class="container">
+        <div class="shop__option" style="width: 100%;">
+            <div class="row">
+                <div class="col-lg-7 col-md-7">
+                    <div class="shop__option">
+                        <form id="categoryForm" method="get" action="products">
+                            <select name="category" onchange="document.getElementById('categoryForm').submit();">
+                                <option value="" {% if not request.GET.category %}selected{% endif %}>All Categories</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category }}" {% if request.GET.category == category %}selected{% endif %}>
+                                        {{ category }}
+                                    </option>
+                                    {% endfor %}
+                                </select>                                
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                    <form id="sortForm" method="get" action="products">
+                        <div class="shop__option__right">
+                            <select name="sort" onchange="document.getElementById('sortForm').submit();">
+                                <option disabled {% if not request.GET.sort %}selected{% endif %}>Sort</option>
+                                <option value="asc" {% if request.GET.sort == "asc" %}selected{% endif %}>A to Z</option>
+                                <option value="desc" {% if request.GET.sort == "desc" %}selected{% endif %}>Z to A</option>
+                                <option value="lowtohigh" {% if request.GET.sort == "lowtohigh" %}selected{% endif %}>Low to High Price</option>
+                                <option value="hightolow" {% if request.GET.sort == "hightolow" %}selected{% endif %}>High to Low Price</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="product__item">
+                    <a href="/product_details/{{product.id}}">
+                        <div class="product__item__pic set-bg" data-setbg="{{product.picture.url}}">
+                            <div class="product__label">
+                                    <span>{{product.category}}</span>
+                            </div>
+                        </div>
+
+                    <div class="product__item__text">
+                        <h6><a href="/product_details/{{product.id}}">{{product.name}}</a></h6>
+                        <div class="product__item__price">₹{{product.price}}/kg</div>
+                    </a>
+                        <div class="cart_add">
+
+                            
+                            {% if request.user.is_anonymous %}
+                            <a href="login">Add to cart</a>
+                            {% else %}
+                            
+                                {% if user.is_authenticated and user.is_superuser %}
+                                    <a href="/remove_product/{{product.id}}">Remove Product</a>
+                                {% else %}
+
+                                <a href="/cart/{{product.id}}">Add to cart</a>
+                                
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+            {% if user.is_authenticated and user.is_superuser %}
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'images/icons/gallery.png' %}">
+                            <div class="product__label">
+                                <span>Product Category</span>
+                            </div>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">Product Name</a></h6>
+                            <div class="product__item__price">Product Price</div>
+                            <div class="cart_add">
+                                <a href="add_product">Add Product</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+
+{% endblock %}

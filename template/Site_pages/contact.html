@@ -1,0 +1,104 @@
+{% extends 'sub_base.html' %} 
+
+{% block sub_content %}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__text">
+                    <h2>Contact Us</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="breadcrumb__links">
+                    <a href="/">Home</a>
+                    <span>Contact Us</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<section class="contact spad">
+    <div class="container">
+        <div class="map">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-4 col-md-3">
+                        <div class="map__inner">
+                            <h6>Jalaram Sweets</h6>
+                            <ul>
+                                    <li>Char-Chowk, Keshod, Gujarat-362220</li>
+                                    <li>+91 9409404010</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="map__iframe">
+                <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d385.12738628600624!2d70.24506515335128!3d21.300634732379404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bfd51b2aae079cf%3A0xfac326eca6b1810a!2sJalaram%20Dairy%20Farm!5e0!3m2!1sen!2sin!4v1680630370551!5m2!1sen!2sin"
+                height="390" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="contact__text">
+                    <h3>Contact With us</h3>
+                    <ul>
+                        <li>Representatives or Advisors are available:</li>
+                        <li>Mon-Fri: 11:00am to 7:00pm</li>
+                        <li>Sat-Sun: 11:00am to 8:30pm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="contact__form">
+                    <form method="POST" action="/contact">
+
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                {% if request.user.is_anonymous %}
+                                    <input type="text" placeholder="Name">
+                                {% else %}
+                                    <input type="text" value="{{ user }}" disabled>
+                                {% endif %}      
+                            </div>
+                            <div class="col-lg-6">
+                                {% if request.user.is_anonymous %}
+                                    <input type="text" placeholder="Email">
+                                {% else %}
+                                    <input type="email" value="{{ user.email }}" name="user_email" disabled>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-12">
+                                <textarea name="message" placeholder="Message" name="message"></textarea>
+
+                                {% if request.user.is_anonymous %}
+                                    <button type="submit" class="site-btn" disabled>
+                                        <a href="login" style="color:white">
+                                            Send Us
+                                        </a>
+                                    </button>
+                                {% else %}
+                                    <button type="submit" class="site-btn">Send Us</button>
+                                    
+                                {% endif %}
+                                    
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact Section End -->
+
+{% endblock %}

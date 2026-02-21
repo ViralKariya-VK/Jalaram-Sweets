@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class="class spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="class__form">
+                    <div class="section-title">
+                        <a href="#">
+                            <h2>Log In</h2>
+                        </a>
+                    </div>
+                    <form action="/login" method="post">
+
+                        {% csrf_token %}
+
+                        <input type="text" name="login_username" placeholder="Enter Your Username" required>
+                        <input type="password" name="login_password" placeholder="Enter Your Password" required>
+
+                        {% if error_message %}
+                          <h6 style="margin-bottom: 10px; color: red;">
+                          {{ error_message }}
+                          </h6>
+                        {% endif %}
+
+                        <button type="submit" class="site-btn">Login</button>
+                        <!-- onclick="alert('Alert this pages');" -->
+                    </form>
+
+                    <h6 style="margin-top: 20px;">
+                        Not a user already?
+                        <a href="register" style="color: blue" onmouseover="this.style.color='black'"
+                            onmouseout="this.style.color='blue'">
+                            Create Your Account
+                        </a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="class__video set-bg"
+            data-setbg="{% static 'images/products/1_Traditional_Classics/0_MilkCake.webp' %}" style="height: 90%; margin-top: 3rem;"> -->
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

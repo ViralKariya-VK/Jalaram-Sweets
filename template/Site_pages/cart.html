@@ -1,0 +1,120 @@
+{% extends 'sub_base.html' %} 
+
+{% block sub_content %}
+
+<div class="breadcrumb-option">
+    <!-- Breadcrumb Content -->
+</div>
+
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in cart_products %}
+                            <tr data-product-id="{{ product.id }}">
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img src="{{ product.product.picture.url }}" alt="" style="height: 90px; width: 90px;">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>{{ product.product.name }}</h6>
+                                        <h5>₹{{ product.product.price }}</h5>
+                                    </div>
+                                </td>
+                                <td class="quantity__item">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input name="quantity" type="number" min="1" value="{{ product.quantity }}" class="quantity-input">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="cart__price">₹{{ product.total_price }}</td> <!-- This will display the total for the product -->
+                                <td class="cart__close">
+                                    <a href="/remove_cart/{{ product.id }}">
+                                        <span class="icon_close"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn">
+                            <a href="products">Continue Shopping</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn update__btn">
+                            <a href="update_cart"><i class="fa fa-spinner"></i> Update cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart__total">
+                    <h6>Cart total</h6>
+                    <ul>
+                        <li>Total <span>₹{{ cart_total }}</span></li>
+                    </ul>
+                    <a href="checkout" class="primary-btn">Proceed to checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+<script>
+     document.addEventListener("DOMContentLoaded", function() {
+        // Quantity change listener
+        // Existing code for incrementing and decrementing quantity
+        
+        // Add new code for the Update Cart button functionality
+        document.querySelector(".update__btn a").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default action of the button
+
+            // Prepare cart data to send to the server
+            const cartData = [];
+            document.querySelectorAll("tr[data-product-id]").forEach(row => {
+                const productId = row.getAttribute("data-product-id");
+                const quantity = row.querySelector(".quantity-input").value;
+                cartData.push({ product_id: productId, quantity: parseInt(quantity) });
+            });
+
+            // Send data to the server via AJAX
+            fetch("{% url 'update_cart' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify(cartData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the cart total and product totals in the HTML
+                document.querySelector("#cart-grand-total").innerText = "₹" + data.cart_total.toFixed(2);
+                data.cart_products.forEach(product => {
+                    const row = document.querySelector(`tr[data-product-id="${product.id}"]`);
+                    row.querySelector(".cart__price").innerText = "₹" + product.total_price.toFixed(2);
+                });
+            });
+        });
+    }); 
+
+    
+</script>
+{% endblock %}

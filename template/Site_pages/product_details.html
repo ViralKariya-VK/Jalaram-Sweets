@@ -1,0 +1,129 @@
+{% extends 'sub_base.html' %}
+
+{% load static %}
+
+{% block sub_content %}
+
+{% if messages %}
+<!-- <script>
+    var a = "{% for message in messages %}{{ message }}{% endfor %}";
+    alert(a);
+</script> -->
+
+<div id="custom-alert" class="custom-alert" style="display: none;">
+    <span style="position: fixed;
+        bottom: 30px; /* Position it 10px from the bottom */
+        left: 50%; /* Center horizontally */
+        transform: translateX(-50%); /* Center the box properly */
+        background-color: #0F52BA; /* Green background */
+        color: white;
+        padding: 13px;
+        border-radius: 5px;
+        z-index: 1000; /* Ensure it's on top of other content */
+        font-size: 17px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: ease-in-out;">{% for message in messages %}{{ message }}{% endfor %}</span>
+</div>
+<script>
+    // Display the alert box
+    document.getElementById('custom-alert').style.display = 'block';
+
+    // Hide the alert box after 1 second (1000 ms)
+    setTimeout(function() {
+        document.getElementById('custom-alert').style.display = 'none';
+    }, 1500);
+</script>
+{% endif %}
+
+    <!-- Shop Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product__details__img">
+                        <div class="product__details__big__img">
+                            <img class="big_img" src="{{ product.picture.url }}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="product__details__text">
+                        <div class="product__label">{{ product.category }}</div>
+                        <h4>{{ product.name }}</h4>
+                        <h5>₹{{ product.price }}</h5>
+                        <p>{{ product.short_desc }}</p>
+                        <ul>
+                            <li><span>Ingredients:</span></li>
+                            {% for item in ingredients_list %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="product__details__option">
+                            <a href="/cart/{{product.id}}" class="primary-btn">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product__details__tab">
+                <div class="col-lg-14">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"><h4 style="color: black;">Story behind {{product.name}}</h4></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-lg-8">
+                                    <p>
+                                        {{product.detailed_desc}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Details Section End -->
+
+        <!-- Related Products Section Begin -->
+        <section class="related-products spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                            <h2>Related Products</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="related__products__slider owl-carousel">
+                        {% for product in products %}
+                        <div class="col-lg-3">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="{{ product.picture.url }}">
+                                    <div class="product__label">
+                                        <span>{{ product.category }}</span>
+                                    </div>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="/product_details/{{product.id}}">{{ product.name }}</a></h6>
+                                    <div class="product__item__price">₹{{ product.price }}</div>
+                                    <div class="cart_add">
+                                        <a href="/cart/{{product.id}}">Add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Related Products Section End -->
+
+
+{% endblock %}
