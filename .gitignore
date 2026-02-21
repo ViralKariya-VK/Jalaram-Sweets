@@ -1,0 +1,70 @@
+# ----------------------
+# Python
+# ----------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+*.pyc
+
+# ----------------------
+# Virtual Environment
+# ----------------------
+venv/
+env/
+ENV/
+.venv/
+
+# ----------------------
+# Environment variables
+# ----------------------
+.env
+.env.*
+*.env
+
+# ----------------------
+# Django
+# ----------------------
+*.log
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# If you collect static in production
+# static/
+
+# ----------------------
+# Migrations (Optional)
+# ----------------------
+# Uncomment if you want to ignore migrations (not recommended in team projects)
+# */migrations/*
+# !*/migrations/__init__.py
+
+# ----------------------
+# IDE / Editor
+# ----------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ----------------------
+# OS Files
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# Testing
+# ----------------------
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ----------------------
+# Misc
+# ----------------------
+*.bak
+*.tmp
